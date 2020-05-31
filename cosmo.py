@@ -8,7 +8,7 @@ import numpy as N
 import math as M
 from scipy.integrate import romberg,quad
 import scipy.interpolate
-from classy import Class
+#from classy import Class
 
 class PowerSpectrum(object):
     ''' Parent class to compute the linear power spectrum. You just need to specify
