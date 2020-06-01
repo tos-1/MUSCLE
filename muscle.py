@@ -38,6 +38,7 @@ class muscle(object):
       exact_pk: boolean to fix the fourier amplitudes of the initial density
       makeic: write the parameter file and the binaries for Gadget2. If z_pk!=redshift an error is raised. It works only with 2lpt
       pos: boolean to return the array of pos, otherwise positions are written on a binary in Gadget2 format
+      saveto: string of the name of the folder where to store the binaries
     '''
 
     def __init__(
@@ -60,7 +61,8 @@ class muscle(object):
             threads=1,
             extra_info='',
             seed=1,
-            exact_pk=True):
+            exact_pk=True,
+            saveto='sims'):
 
         self.ng = int(ng)
         self.thirdim = self.ng // 2 + 1
@@ -69,6 +71,7 @@ class muscle(object):
         self.h = h
         self.redshift = redshift
         self.z_pk = z_pk
+        self.saveto = saveto
         self.sigmaalpt = sigmaalpt
         self.ns = ns
         self.scheme = scheme
@@ -97,10 +100,17 @@ class muscle(object):
         self.shr = (self.shc[0], self.shc[1], (self.shc[2] - 1) * 2)
 
         # cosmology
-        if cosmology == 'ehu':
+        if cosmology == 'cls':
+            try:
+                from classy import Class
+                self.C = cosmo.PSClass(h, omega_b, Omega_cdm, ns, sigma8)
+            except ImportError:
+                print('class is not installed, using ehu')
+                self.C = cosmo.EisHu(h, omega_b, Omega_cdm, ns, sigma8)
+
+        elif cosmology == 'ehu':
             self.C = cosmo.EisHu(h, omega_b, Omega_cdm, ns, sigma8)
-        elif cosmology == 'cls':
-            self.C = cosmo.PSClass(h, omega_b, Omega_cdm, ns, sigma8)
+
         else:
             raise ValueError("select the cosmology correctly")
 
@@ -126,7 +136,7 @@ class muscle(object):
 
         # create the folders where binaries are stored
         if (self.makeic) or (self.return_pos == False):
-            path, fileroot = gadgetutils.writedir(self.sigmaalpt, self.extra_info, scheme=self.scheme, smallscheme=self.smallscheme, redshift=self.redshift,
+            path, fileroot = gadgetutils.writedir(self.saveto,self.sigmaalpt, self.extra_info, scheme=self.scheme, smallscheme=self.smallscheme, redshift=self.redshift,
                                                   boxsize=self.boxsize, ngrid=self.ng, hubble=self.C.h, Omega0=self.C.Omega_0, makeic=self.makeic)
 
         if ((self.makeic) and (self.scheme == '2lpt') and (path is not None)):
