@@ -22,6 +22,7 @@ parser.add_argument('-ng',default = 64, help = 'number of particles per side',ty
 parser.add_argument('-box',default = 64., help = 'size of the box in Mpc/h',type = float)
 parser.add_argument('-sigmaalpt',default = 4., help = 'interpolating scale between 2lpt and sc, in Mpc/h',type = float)
 parser.add_argument('-scheme',default = '2lpt', help = 'scheme among which to choose the evolution. The options are zeld,2lpt,sc,hmlpt,muscle')
+parser.add_argument('-saveto',default = 'sims', help = 'string of the name of the output folder to store the binaries')
 parser.add_argument('-smallscheme',default = None, help = 'selecting this activates alpt. It works only with sc and muscle, while 2lpt on large scales is automatically set')
 parser.add_argument('-threads',default = 1., help = 'number of threads used by pyfftw',type = int)
 parser.add_argument('-extra',default ='', help = 'initial stringany for the output fileroot',type = str)
@@ -35,8 +36,7 @@ args = vars(parser.parse_args())
 
 print 'the scheme you chose was', args['scheme']
 
-MSC = muscle.muscle( cosmology = args['cosmology'], h = args['hubble'] , omega_b = args['omega_b'] , Omega_cdm = args['Omega_cdm'], ns = args['ns'] , sigma8 =args['s8'] , z_pk = args['z_pk'],
-redshift = args['redshift'], sigmaalpt = args['sigmaalpt'], scheme =args['scheme'], ng = args['ng'] ,boxsize = args['box'] ,smallscheme = args['smallscheme'] ,
+MSC = muscle.muscle( saveto = args['saveto'], cosmology = args['cosmology'], h = args['hubble'] , omega_b = args['omega_b'] , Omega_cdm = args['Omega_cdm'], ns = args['ns'] , sigma8 =args['s8'] , z_pk = args['z_pk'], redshift = args['redshift'], sigmaalpt = args['sigmaalpt'], scheme =args['scheme'], ng = args['ng'] ,boxsize = args['box'] ,smallscheme = args['smallscheme'] ,
 makeic = args['makeic'], return_pos=args['pos'],threads = args['threads'] , extra_info = args['extra'] ,seed=args['seed'], exact_pk=args['exact_pk'] )
 
 MSC.generate()
