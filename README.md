@@ -1,7 +1,7 @@
 # MUSCLE
 MUltiscale Spherical ColLapse Evolution code. It also performs Zel'dovich, 2lpt, alpt.
 
-To run MUSCLE you need to run numpy and scipy alogside pyfftw.
+To run MUSCLE, you need to install numpy and scipy alogside pyfftw. 
 
 The cosmological module cosmo.py generates the linear power spectrum. In MUSCLE one can choose between a spectrum generated with Eisentein and Hu formulae or with a CLASS implementation, albeit it is a bit slower.
 
