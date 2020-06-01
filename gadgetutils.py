@@ -6,6 +6,7 @@ import os
 
 
 def writedir(
+        sims,
         sigmaalpt,
         extra_info,
         scheme='2lpt',
@@ -21,7 +22,10 @@ def writedir(
     '''
 
     # name of the output directory
-    sims = '/home/federico/Documenti/PhD/LSS/HMUSCLE/sims/'
+    sims = sims+'/'
+    if not os.path.exists(sims):
+        os.mkdir(sims)
+        print('creating the folder ', sims)
     uscr = '_'
 
     # folder with the specifics of the simulation
