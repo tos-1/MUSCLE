@@ -1,8 +1,3 @@
-'''
-    The original implementation of MUSCLE can be found here
-    http://skysrv.pha.jhu.edu/~neyrinck/muscle.html
-'''
-
 import numpy as N
 import cosmo
 import pyfftw
@@ -57,7 +52,7 @@ class muscle(object):
             scheme='zeld',
             smallscheme=None,
             makeic=False,
-            return_pos=False,
+            return_pos=True,
             threads=1,
             extra_info='',
             seed=1,

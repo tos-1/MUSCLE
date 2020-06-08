@@ -29,7 +29,7 @@ parser.add_argument('-extra',default ='', help = 'initial stringany for the outp
 parser.add_argument('-seed',default =1, help = 'seed of the random number generator of initial conditions',type = int)
 parser.add_argument('-exact_pk',default = True, help = 'flag to not fix linear mean value of fourier amplitudes of density',action="store_false")
 parser.add_argument('-makeic',default = False, help = 'flag to write the parameter file for Gadget2. If z_pk!=redshift an error is raised',action="store_true")
-parser.add_argument('-pos',default = False, help = 'flag to returns the array of pos, instead of writing a binary',action="store_true")
+parser.add_argument('-pos',default = True, help = 'flag to returns the array of pos, instead of writing a binary',action="store_false")
 
 
 args = vars(parser.parse_args())
